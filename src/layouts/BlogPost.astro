@@ -1,0 +1,29 @@
+---
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    date: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const { title, description, date } = frontmatter;
+import BaseLayout from './BaseLayout.astro';
+---
+
+<BaseLayout title={`${title} | FIRECalc Blog`} description={description}>
+  <article class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
+    <header class="mb-6 border-b border-gray-200 pb-4">
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{title}</h1>
+      <time datetime={date} class="text-sm text-gray-500">{new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+    </header>
+    <div class="prose prose-gray max-w-none text-gray-700 leading-relaxed">
+      <slot />
+    </div>
+  </article>
+
+  <div class="mt-8 text-center">
+    <a href="/blog" class="text-orange-600 hover:underline">← Back to Blog</a>
+  </div>
+</BaseLayout>

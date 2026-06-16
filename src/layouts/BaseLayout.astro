@@ -1,0 +1,101 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="FIRE calculator, financial independence, retire early, FIRE number, savings rate, 4% rule, retirement calculator, early retirement, financial freedom" />
+    <meta name="author" content="FIRECalc" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Google Analytics GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVRGZZBGVQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KVRGZZBGVQ');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3692412976469370" crossorigin="anonymous"></script>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="FIRECalc" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FIRECalc",
+      "url": "https://firecalc.cc.cd",
+      "description": "Free FIRE calculator — find out when you can retire early. Calculate your FIRE number, years to financial independence, and savings milestones.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    })} />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+  </head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
+    <!-- Nav -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 font-bold text-lg text-orange-600">
+          🔥 FIRECalc
+        </a>
+        <div class="flex gap-4 text-sm font-medium">
+          <a href="/" class="hover:text-orange-600 transition-colors">Calculator</a>
+          <a href="/blog" class="hover:text-orange-600 transition-colors">Blog</a>
+          <a href="/about" class="hover:text-orange-600 transition-colors">About</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="max-w-5xl mx-auto px-4 py-8">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 mt-12">
+      <div class="max-w-5xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
+        <p>© 2026 FIRECalc — Free FIRE Retirement Calculator. Calculate your path to financial independence.</p>
+        <p class="mt-1">Not financial advice. Always consult a qualified financial advisor.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @import "tailwindcss";
+</style>

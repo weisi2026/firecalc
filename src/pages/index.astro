@@ -1,0 +1,292 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="FIRE Calculator — When Can You Retire Early? | FIRECalc" description="Free FIRE calculator. Find your FIRE number, calculate years to financial independence, see savings milestones, and plan your early retirement with the 4% rule.">
+
+  <!-- Hero -->
+  <section class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+      🔥 FIRE Calculator
+    </h1>
+    <p class="text-gray-600 text-lg">When can <em>you</em> achieve financial independence and retire early?</p>
+  </section>
+
+  <!-- Ad Banner Top -->
+  <div class="bg-gray-100 rounded-lg p-4 mb-8 text-center text-gray-400 text-sm border border-dashed border-gray-300">
+    Advertisement
+  </div>
+
+  <!-- Calculator Form -->
+  <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <form id="fireForm" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Your Age -->
+        <div>
+          <label for="currentAge" class="block text-sm font-medium text-gray-700 mb-1">Your Current Age</label>
+          <input type="number" id="currentAge" name="currentAge" value="30" min="18" max="80" step="1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Annual Income -->
+        <div>
+          <label for="annualIncome" class="block text-sm font-medium text-gray-700 mb-1">Annual Income ($)</label>
+          <input type="number" id="annualIncome" name="annualIncome" value="80000" min="0" step="1000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Annual Savings -->
+        <div>
+          <label for="annualSavings" class="block text-sm font-medium text-gray-700 mb-1">Annual Savings ($)</label>
+          <input type="number" id="annualSavings" name="annualSavings" value="30000" min="0" step="1000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Current Savings -->
+        <div>
+          <label for="currentSavings" class="block text-sm font-medium text-gray-700 mb-1">Current Savings ($)</label>
+          <input type="number" id="currentSavings" name="currentSavings" value="50000" min="0" step="1000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Annual Return Rate -->
+        <div>
+          <label for="annualReturnRate" class="block text-sm font-medium text-gray-700 mb-1">Expected Annual Return (%)</label>
+          <input type="number" id="annualReturnRate" name="annualReturnRate" value="7" min="0" max="30" step="0.1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Inflation Rate -->
+        <div>
+          <label for="inflationRate" class="block text-sm font-medium text-gray-700 mb-1">Inflation Rate (%)</label>
+          <input type="number" id="inflationRate" name="inflationRate" value="3" min="0" max="15" step="0.1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Retirement Annual Spending -->
+        <div>
+          <label for="targetAnnualSpending" class="block text-sm font-medium text-gray-700 mb-1">Retirement Annual Spending ($)</label>
+          <input type="number" id="targetAnnualSpending" name="targetAnnualSpending" value="40000" min="0" step="1000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+        </div>
+
+        <!-- Withdrawal Rate -->
+        <div>
+          <label for="withdrawalRate" class="block text-sm font-medium text-gray-700 mb-1">Safe Withdrawal Rate (%)</label>
+          <input type="number" id="withdrawalRate" name="withdrawalRate" value="4" min="1" max="10" step="0.1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+          <p class="text-xs text-gray-400 mt-1">The 4% rule is the standard. Lower = safer, higher = riskier.</p>
+        </div>
+      </div>
+
+      <button type="submit"
+        class="w-full md:w-auto px-8 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors text-lg">
+        🔥 Calculate My FIRE Date
+      </button>
+    </form>
+  </section>
+
+  <!-- Results Section -->
+  <section id="results" class="hidden">
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
+        <p class="text-sm text-gray-500 mb-1">🔥 FIRE Number</p>
+        <p id="resultFireNumber" class="text-2xl font-bold text-orange-600">$0</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
+        <p class="text-sm text-gray-500 mb-1">⏳ Years to FIRE</p>
+        <p id="resultYears" class="text-2xl font-bold text-blue-600">0</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
+        <p class="text-sm text-gray-500 mb-1">🎂 FIRE Age</p>
+        <p id="resultFireAge" class="text-2xl font-bold text-emerald-600">0</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
+        <p class="text-sm text-gray-500 mb-1">💰 Savings Rate</p>
+        <p id="resultSavingsRate" class="text-2xl font-bold text-purple-600">0%</p>
+      </div>
+    </div>
+
+    <!-- FIRE Type Badge -->
+    <div id="fireTypeBadge" class="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-8 text-center">
+      <p id="fireType" class="text-lg font-semibold text-orange-800"></p>
+      <p id="fireTypeDesc" class="text-sm text-orange-600 mt-1"></p>
+    </div>
+
+    <!-- Chart -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+      <h2 class="text-lg font-semibold mb-4">Your Path to FIRE</h2>
+      <canvas id="fireChart" width="800" height="400"></canvas>
+    </div>
+
+    <!-- Ad Banner Mid -->
+    <div class="bg-gray-100 rounded-lg p-4 mb-8 text-center text-gray-400 text-sm border border-dashed border-gray-300">
+      Advertisement
+    </div>
+
+    <!-- Year-by-Year Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8 overflow-x-auto">
+      <h2 class="text-lg font-semibold mb-4">Year-by-Year Breakdown</h2>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-200 text-left">
+            <th class="py-2 px-3">Year</th>
+            <th class="py-2 px-3">Age</th>
+            <th class="py-2 px-3">Total Savings</th>
+            <th class="py-2 px-3">Contributions</th>
+            <th class="py-2 px-3">Gains</th>
+            <th class="py-2 px-3">Milestone</th>
+          </tr>
+        </thead>
+        <tbody id="breakdownTable"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ Section (SEO Content) -->
+  <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+    <h2 class="text-xl font-bold mb-4">What is FIRE?</h2>
+    <div class="space-y-4 text-gray-600 text-sm leading-relaxed">
+      <p><strong>FIRE</strong> stands for <strong>Financial Independence, Retire Early</strong>. It's a movement of people who save and invest aggressively—often 50%+ of their income—so they can retire decades before the traditional age of 65.</p>
+      <p>The core idea is simple: <strong>save enough money, invest it wisely, then live off the returns</strong>. The "4% rule" says if you withdraw 4% of your portfolio per year, your savings should last 30+ years.</p>
+      <p><strong>FIRE Number = Annual Spending ÷ Withdrawal Rate</strong>. For example, if you need $40,000/year and use the 4% rule, your FIRE number is $1,000,000.</p>
+      <h3 class="font-semibold text-gray-800 pt-2">Types of FIRE</h3>
+      <ul class="list-disc list-inside space-y-1">
+        <li><strong>Lean FIRE</strong> — Retire with minimal spending ($30k-$40k/yr). Requires ~$750k-$1M.</li>
+        <li><strong>Regular FIRE</strong> — Retire with moderate spending ($40k-$60k/yr). Requires ~$1M-$1.5M.</li>
+        <li><strong>Fat FIRE</strong> — Retire with comfortable spending ($80k+/yr). Requires $2M+.</li>
+      </ul>
+      <h3 class="font-semibold text-gray-800 pt-2">How to Use This Calculator</h3>
+      <p>Enter your income, savings, current portfolio, and expected returns. The calculator will show you exactly how many years until you hit your FIRE number, with year-by-year milestones so you can track your progress.</p>
+    </div>
+  </section>
+
+  <!-- Ad Banner Bottom -->
+  <div class="bg-gray-100 rounded-lg p-4 mb-8 text-center text-gray-400 text-sm border border-dashed border-gray-300">
+    Advertisement
+  </div>
+
+</BaseLayout>
+
+<script>
+import { calculateFIRE, formatCurrency } from '../lib/fire-calculator';
+import Chart from 'chart.js/auto';
+
+let chartInstance: Chart | null = null;
+
+function fmt(n: number): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+}
+
+function runCalculation() {
+  const currentAge = parseInt((document.getElementById('currentAge') as HTMLInputElement).value) || 30;
+  const annualIncome = parseFloat((document.getElementById('annualIncome') as HTMLInputElement).value) || 0;
+  const annualSavings = parseFloat((document.getElementById('annualSavings') as HTMLInputElement).value) || 0;
+  const currentSavings = parseFloat((document.getElementById('currentSavings') as HTMLInputElement).value) || 0;
+  const annualReturnRate = parseFloat((document.getElementById('annualReturnRate') as HTMLInputElement).value) || 0;
+  const inflationRate = parseFloat((document.getElementById('inflationRate') as HTMLInputElement).value) || 0;
+  const targetAnnualSpending = parseFloat((document.getElementById('targetAnnualSpending') as HTMLInputElement).value) || 0;
+  const withdrawalRate = parseFloat((document.getElementById('withdrawalRate') as HTMLInputElement).value) || 4;
+
+  const result = calculateFIRE({
+    annualIncome, annualSavings, currentSavings,
+    annualReturnRate, inflationRate, withdrawalRate, targetAnnualSpending, currentAge
+  });
+
+  // Show results
+  document.getElementById('results')!.classList.remove('hidden');
+  document.getElementById('resultFireNumber')!.textContent = fmt(result.fireNumber);
+  
+  if (result.yearsToFIRE === -1) {
+    document.getElementById('resultYears')!.textContent = '60+';
+    document.getElementById('resultFireAge')!.textContent = '90+';
+  } else {
+    document.getElementById('resultYears')!.textContent = result.yearsToFIRE.toString() + ' years';
+    document.getElementById('resultFireAge')!.textContent = result.fireAge.toString();
+  }
+  
+  document.getElementById('resultSavingsRate')!.textContent = result.savingsRate.toFixed(1) + '%';
+
+  // FIRE Type
+  const spending = targetAnnualSpending;
+  let fireType = '';
+  let fireTypeDesc = '';
+  if (spending < 40000) {
+    fireType = '🔥 Lean FIRE';
+    fireTypeDesc = 'Minimalist retirement. You\'ll live frugally but free.';
+  } else if (spending < 80000) {
+    fireType = '✅ Regular FIRE';
+    fireTypeDesc = 'Comfortable retirement. Not luxurious, but not scraping by.';
+  } else {
+    fireType = '💎 Fat FIRE';
+    fireTypeDesc = 'Luxurious retirement. You\'ll maintain or upgrade your lifestyle.';
+  }
+  document.getElementById('fireType')!.textContent = fireType;
+  document.getElementById('fireTypeDesc')!.textContent = fireTypeDesc;
+
+  // Table
+  const tbody = document.getElementById('breakdownTable')!;
+  tbody.innerHTML = result.annualBreakdown.map(row => `
+    <tr class="border-b border-gray-100 hover:bg-gray-50 ${row.milestone ? 'bg-orange-50 font-medium' : ''}">
+      <td class="py-2 px-3">${row.year}</td>
+      <td class="py-2 px-3">${currentAge + row.year - 1}</td>
+      <td class="py-2 px-3">${fmt(row.totalSavings)}</td>
+      <td class="py-2 px-3">${fmt(row.annualContributions)}</td>
+      <td class="py-2 px-3 text-emerald-600">+${fmt(row.investmentGains)}</td>
+      <td class="py-2 px-3 text-orange-600 font-semibold">${row.milestone}</td>
+    </tr>
+  `).join('');
+
+  // Chart
+  const ctx = document.getElementById('fireChart') as HTMLCanvasElement;
+  if (chartInstance) chartInstance.destroy();
+
+  const fireLine = result.annualBreakdown.map(() => result.fireNumber);
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: result.annualBreakdown.map(r => `Year ${r.year}`),
+      datasets: [
+        {
+          label: 'Total Savings',
+          data: result.annualBreakdown.map(r => r.totalSavings),
+          borderColor: '#ea580c',
+          backgroundColor: 'rgba(234, 88, 12, 0.1)',
+          fill: true,
+          tension: 0.3,
+        },
+        {
+          label: 'FIRE Number',
+          data: fireLine,
+          borderColor: '#16a34a',
+          borderDash: [8, 4],
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: { mode: 'index', intersect: false },
+        legend: { position: 'bottom' },
+        annotation: undefined,
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: (v) => fmt(v as number) } },
+      },
+    },
+  });
+}
+
+document.getElementById('fireForm')!.addEventListener('submit', (e) => {
+  e.preventDefault();
+  runCalculation();
+});
+
+// Auto-calculate on page load
+runCalculation();
+</script>

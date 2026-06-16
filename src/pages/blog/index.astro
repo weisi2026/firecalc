@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = import.meta.glob('./**/*.md', { eager: true });
+const sortedPosts = Object.entries(posts)
+  .map(([path, post]: any) => ({
+    slug: path.replace('./', '').replace('.md', ''),
+    ...post.frontmatter
+  }))
+  .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+---
+
+<BaseLayout title="FIRE Blog — Early Retirement Tips & Guides | FIRECalc" description="Learn about FIRE, early retirement strategies, the 4% rule, savings rates, and how to achieve financial independence.">
+  <h1 class="text-3xl font-bold mb-8">🔥 FIRE Blog</h1>
+  <div class="space-y-6">
+    {sortedPosts.map((post: any) => (
+      <a href={`/blog/${post.slug}`} class="block bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">{post.title}</h2>
+        <p class="text-gray-600 text-sm mb-2">{post.description}</p>
+        <time class="text-xs text-gray-400">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

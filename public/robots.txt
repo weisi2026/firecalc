@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://firecalc.cc.cd/sitemap-index.xml
