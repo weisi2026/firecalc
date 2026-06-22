@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://firecalc.cc.cd',
+  site: 'https://fires-calc.com',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://firecalc.cc.cd/sitemap-index.xml
+Sitemap: https://fires-calc.com/sitemap-index.xml
